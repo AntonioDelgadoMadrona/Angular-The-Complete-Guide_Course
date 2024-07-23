@@ -2,6 +2,16 @@
 
 <main>
   <ul id="users">
-    <li><app-user /></li>
+    <!-- Siempre que tenemos una propiedad que va a ser alterada, tenemos que bindearla al componente [prop]="" -->
+    <li>
+      <app-user
+        [id]="users[0].id"
+        [avatar]="users[0].avatar"
+        [name]="users[0].name"
+        (selectUser)="onSelectUser($event)"
+      />
+    </li>
   </ul>
+
+  <app-tasks [name]="selectedUser.name" />
 </main>

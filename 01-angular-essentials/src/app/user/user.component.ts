@@ -1,8 +1,6 @@
-import { Component } from "@angular/core";
-import { DUMMY_USERS } from "../dummy-users";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
-
+// Todo lo que empieza con @ se denomina decorator
 @Component({
   selector: "app-user",
   standalone: true,
@@ -10,15 +8,23 @@ const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
   templateUrl: "./user.component.html",
   styleUrl: "./user.component.css",
 })
+// Es como una clase, pero particular de Angular
 export class UserComponent {
-  selectedUser = DUMMY_USERS[randomIndex];
+  // Con este decorator definimos que vamos a recibir una prop desde un padre
+  // Mediante el required podemos configurar que de un error si la prop no es pasada
+  @Input({ required: true }) id!: string;
+  @Input({ required: true }) avatar!: string;
+  @Input({ required: true }) name!: string;
+
+  // Con este decorator definimos que vamos a "exportar" un evento al padre
+  @Output() selectUser = new EventEmitter<string>();
 
   get imagePath() {
-    return "assets/users/" + this.selectedUser.avatar;
+    return "assets/users/" + this.avatar;
   }
 
   onSelectUser() {
-    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
-    this.selectedUser = DUMMY_USERS[randomIndex];
+    // Para ejecutar el output decorator tenemos que llamar al emit
+    this.selectUser.emit(this.id);
   }
 }
