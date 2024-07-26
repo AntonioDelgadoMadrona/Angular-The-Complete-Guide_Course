@@ -1,0 +1,33 @@
+<app-header />
+
+<main>
+  <ul id="users">
+    <!-- En el decorator @for Angular necesita un tracker para identificar cada item, no hay que añadirle el index -->
+    @for (user of users; track user.id) {
+    <!-- Para las versiones anteriores de Angular 17 hay que utilizar ngFor -->
+    <!-- Y el ngFor tiene que ser importado en el ts desde Angular/common, como si fuera un componente -->
+    <!--
+      <li *ngFor="let user of users">
+        <app-user [user]="user" (selectUser)="onSelectUser($event)" />
+      </li>
+    -->
+
+    <li>
+      <!-- Siempre que tenemos una propiedad que va a ser alterada, tenemos que bindearla al componente [prop]="" -->
+      <app-user [user]="user" [selected]="user.id === selectedUserId" (selectUser)="onSelectUser($event)" />
+    </li>
+    }
+  </ul>
+  <!-- Con el decorator @if declaramos las condiciones de renderizado entre otras cosas -->
+  @if (selectedUser) {
+  <!-- Para las versiones anteriores de Angular 17 hay que utilizar ngIf y ng-template -->
+  <!-- Y el ngIf tiene que ser importado en el ts desde Angular/common, como si fuera un componente -->
+  <!--
+    <app-tasks *ngIf="selectedUser; else fallback" [name]="selectedUser.name" />
+    <ng-template #fallback>...</ng-template>
+  -->
+  <app-tasks [selectedUser]="selectedUser" />
+  } @else {
+  <p id="fallback">Select an user to see their tasks!</p>
+  }
+</main>

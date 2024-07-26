@@ -1,0 +1,28 @@
+<div class="backdrop"></div>
+<dialog open>
+  <h2>Add Task</h2>
+  <!-- En Angular no es necesario hacer ningun preventEvent. Con solo controlar mediante two-ways binding los input,
+   tener un submit button y utilizar el ngSubmit es suficiente -->
+  <form (ngSubmit)="onSubmit()">
+    <p>
+      <label for="title">Title</label>
+      <!-- La directiva ngModel sirve para bindear en doble direccion una propiedad. Se usa en Forms e Inputs -->
+      <input type="text" id="title" name="title" [(ngModel)]="enteredTitle" />
+    </p>
+
+    <p>
+      <label for="summary">Summary</label>
+      <textarea id="summary" rows="5" name="summary" [(ngModel)]="enteredSummary"></textarea>
+    </p>
+
+    <p>
+      <label for="due-date">Due Date</label>
+      <input type="date" id="due-date" name="due-date" [(ngModel)]="enteredDate" />
+    </p>
+
+    <p class="actions">
+      <button type="button" (click)="onCancel()">Cancel</button>
+      <button type="submit">Create</button>
+    </p>
+  </form>
+</dialog>
